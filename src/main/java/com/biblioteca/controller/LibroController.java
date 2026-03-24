@@ -48,7 +48,11 @@ public class LibroController {
             response.put("data", null);
             return ResponseEntity.ok(response);
         }
-        return ResponseEntity.ok(libros);
+        response.put("timestamp", LocalDateTime.now());
+        response.put("status", HttpStatus.OK.value());
+        response.put("data", libros);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("{id}") // Cada vez que se pone el id se requiere un @Path como parametro
