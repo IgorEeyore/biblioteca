@@ -2,10 +2,13 @@ package com.biblioteca.controller;
 
 import com.biblioteca.model.Libro;
 import com.biblioteca.service.LibroService;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 // Estos imports son para el crud de la maquina
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 
+// Para dar una respuesta solida a una solicitud
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 @RestController
 @RequestMapping("/api/v1/libros") // Direccion URL del "localhost" acompañado con el puerto, ej: "localhost:8080/api/v1/libros"
 public class LibroController {
@@ -28,8 +35,20 @@ public class LibroController {
     private LibroService libroService;
 
     @GetMapping
-    public List<Libro> getBooks(){
-        return libroService.getBooks();
+    // Se agrega un '?' diciendo que no se sabe que va a devolver de manera estricta, si no, que
+    // va a devolver algo y solo yo lo se
+    public ResponseEntity<?> getBooks(){
+        List<Libro> libros = libroService.getBooks();
+        Map<String,Object> response = new HashMap<>();
+        
+        if (libros == null || libros.isEmpty()){
+            response.put("timestamp", LocalDateTime.now());
+            response.put("status", HttpStatus.NO_CONTENT.value());
+            response.put("message", "No hay libros registrados");
+            response.put("data", null);
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.ok(libros);
     }
 
     @GetMapping("{id}") // Cada vez que se pone el id se requiere un @Path como parametro
