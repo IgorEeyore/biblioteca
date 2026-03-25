@@ -4,10 +4,15 @@ package com.biblioteca.service;
 import com.biblioteca.model.Libro;
 import com.biblioteca.repository.LibroRepository;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 // Servicios
 @Service
@@ -28,6 +33,10 @@ public class LibroService {
         return libroRepository.getBookById(id);
     }
 
+    public Libro getBookByIsbn(String isbn){
+        return libroRepository.getBookByIsbn(isbn);
+    }
+
     public Libro updateBook(Libro libro){
         return libroRepository.updateBook(libro);
     }
@@ -43,9 +52,15 @@ public class LibroService {
         return libroRepository.getAllBooks().size();
     }
 
-    // Segunda forma de retornar la cantidad de libros
-    // Esta accion la hace el modelo
-    public int totalBooksV2(){
-        return libroRepository.totalBooks();
+    public long totalBookYear(int fechaPublicacion){
+        return libroRepository.getAllBooks().stream().filter(libro -> libro.getFechaPublicacion() == fechaPublicacion).count();
+    }
+
+    public Optional<Libro> getOldBook(){
+        return libroRepository.getAllBooks().stream().min(Comparator.comparingInt(Libro::getFechaPublicacion));
+    }
+
+    public Map<Integer, Long> countBookByYearGrouped(){
+        return libroRepository.getAllBooks().stream().collect(Collectors.groupingBy(Libro::getFechaPublicacion, Collectors.counting()));
     }
 }

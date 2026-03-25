@@ -8,6 +8,7 @@ import com.biblioteca.model.Libro;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public class LibroRepository {
 
@@ -28,7 +29,7 @@ public class LibroRepository {
         listaLibros.add(new Libro(9,"978-0439139601", "Harry Potter y el prisionero de Azkaban", "Scholastic", 1999, "J. K. Rowling"));
         listaLibros.add(new Libro(10,"978-0439136365", "Harry Potter y el cáliz de fuego", "Scholastic", 2000, "J. K. Rowling"));
         listaLibros.add(new Libro(11,"978-0321127426", "Effective Java", "Addison - Wesley", 2008, "Joshua Bloch"));
-        listaLibros.add(new Libro(12,"978-0134685991", "Clean Architecture", "Prentice Hall", 2017, "Robert C. Martin"));
+        listaLibros.add(new Libro(12,"978-0134685981", "Clean Architecture", "Prentice Hall", 2017, "Robert C. Martin"));
         listaLibros.add(new Libro(13,"978-0201633610", "Design Patterns", "Addison - Wesley", 1994, "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides"));
         listaLibros.add(new Libro(14,"978-0132350884", "Clean Code", "Prentice Hall",2008, "Robert C. Martin"));
     }
@@ -115,8 +116,4 @@ public class LibroRepository {
         listaLibros.removeIf(x -> x.getId() == id);
     }
 
-    // Contamos la cantidad de libros que hay en la lista
-    public int totalBooks(){
-        return listaLibros.size();
-    }
 }
