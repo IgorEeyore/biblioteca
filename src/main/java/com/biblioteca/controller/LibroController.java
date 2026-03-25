@@ -76,6 +76,11 @@ public class LibroController {
         return libroService.deleteBook(id);
     }
 
+    @GetMapping("/total")
+    public int totalBooksV2(){
+        return libroService.totalBooksV2();
+    }
+
     //@PathVariable para obtener un id exacto
     //@RequestBody para ingresar un documento JSON, sirve a la hora de ingresar un nuevo registro de datos
 

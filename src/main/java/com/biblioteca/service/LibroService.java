@@ -37,5 +37,15 @@ public class LibroService {
         return "Producto eliminado";
     }
 
-    
+    // Primera forma que retorna la cantidad de los libros
+    // Esta accion la hace el SERVICE
+    public int totalBooksV1(){
+        return libroRepository.getAllBooks().size();
+    }
+
+    // Segunda forma de retornar la cantidad de libros
+    // Esta accion la hace el modelo
+    public int totalBooksV2(){
+        return libroRepository.totalBooks();
+    }
 }
